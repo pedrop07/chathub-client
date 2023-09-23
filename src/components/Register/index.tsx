@@ -10,7 +10,7 @@ import { InferType } from 'yup'
 import { registerSchema } from './schema'
 import { Card } from '../ui/Card'
 import { clientApi } from '@/services/clientApi'
-import toast, { Toaster } from 'react-hot-toast'
+import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import { errorMessageHandler } from '@/utils/errorMessageHandler'
 
@@ -42,10 +42,6 @@ export function Register() {
 
   return (
     <>
-     <Toaster
-        position="top-right"
-        reverseOrder={false}
-      />
       <div className="w-11/12 sm:w-96">
         <Card>
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">

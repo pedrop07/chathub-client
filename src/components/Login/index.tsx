@@ -10,7 +10,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { loginSchema } from './schema'
 import { InferType } from 'yup'
-import { Toaster, toast } from 'react-hot-toast'
+import { toast } from 'react-hot-toast'
 import { Card } from '../ui/Card'
 import { errorMessageHandler } from '@/utils/errorMessageHandler'
 import { setAccessTokenCookie, setRefreshTokenCookie } from '@/app/actions'
@@ -47,10 +47,6 @@ export function Login() {
 
   return (
     <>
-      <Toaster
-        position="top-right"
-        reverseOrder={false}
-      />
       <div className="w-11/12 sm:w-96">
         <Card>
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">

@@ -5,8 +5,6 @@ import { FetchAuth } from "@/utils/fetchAuth"
 export default async function Page() {
   const chats = await FetchAuth<Chat[]>('chats', 'GET')
 
-  console.log(chats)
-
   return (
     <>
       <Dashboard chats={chats} />

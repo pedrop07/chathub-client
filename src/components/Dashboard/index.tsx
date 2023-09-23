@@ -2,8 +2,6 @@
 
 import { useState } from "react"
 import { Chat } from "../Chat"
-import { Toaster } from "react-hot-toast"
-import { Barbell } from "@phosphor-icons/react";
 import Link from "next/link"
 import { Chat as ChatInterface } from "@/interfaces/Chat"
 
@@ -26,10 +24,6 @@ export function Dashboard({ chats }: Props) {
 
   return (
     <div>
-      <Toaster
-        position="top-right"
-        reverseOrder={false}
-      />
       <div className="p-4">
         
         <div className="bg-[url('/space.jpg')] bg-cover bg-center rounded">

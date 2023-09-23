@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Header } from '@/components/Header'
 import { getTheme } from '../actions'
+import { Toaster } from 'react-hot-toast'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -27,6 +28,7 @@ export default async function RootLayout({
     <html className={theme} lang="en">
       <body className={clsx(inter.className, 'dark:bg-slate-900 bg-slate-100')}>
         <Header initialTheme={theme} />
+        <Toaster position="top-right" />
         {children}
       </body>
     </html>
