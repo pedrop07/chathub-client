@@ -20,36 +20,48 @@ export async function middleware(
 
   if (checkIsPrivateRoute(cleanPathName)) {
     const accessToken = request.cookies.get('chathub.access-token')?.value
-    const accessTokenResponse = await fetch(`http://localhost:3000/profile`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${accessToken}`
+    if (accessToken) {
+      try {
+        await fetch(`http://localhost:3000/profile`, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        })
+        return NextResponse.next()
+      } catch (error) {
+        console.log('MIDDLEWARE ERROR: [ACCESS TOKEN REQUEST]', error)
       }
-    })
+    }
 
-    if (!accessTokenResponse.ok) {
-      const refreshToken = request.cookies.get('chathub.refresh-token')?.value
-      const refreshTokenResponse = await fetch(`http://localhost:3000/auth/refresh-token`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${refreshToken}`
+    const refreshToken = request.cookies.get('chathub.refresh-token')?.value
+    if (refreshToken) {
+      try {
+        const refreshTokenResponse = await fetch(`http://localhost:3000/auth/refresh-token`, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${refreshToken}`
+          }
+        })
+
+        if (refreshTokenResponse.ok) {
+          const data = await refreshTokenResponse.json() as RefreshTokenResponse
+
+          let response = NextResponse.redirect(request.url);
+          response.cookies.set({
+            name: "chathub.access-token",
+            value: data.accessToken
+          });
+          response.cookies.set({
+            name: "chathub.refresh-token",
+            value: data.refreshToken
+          });
+          return response
+        } else {
+          return NextResponse.redirect(new URL('/sign-in', request.url))
         }
-      })
-
-      if (refreshTokenResponse.ok) {
-        const data = await refreshTokenResponse.json() as RefreshTokenResponse
-        
-        let response = NextResponse.redirect(request.url);
-        response.cookies.set({
-          name: "chathub.access-token",
-          value: data.accessToken
-        });
-        response.cookies.set({
-          name: "chathub.refresh-token",
-          value: data.refreshToken
-        });
-        return response
-      } else {
+      } catch (error) {
+        console.log('MIDDLEWARE ERROR: [REFRESH TOKEN REQUEST]', error)
         return NextResponse.redirect(new URL('/sign-in', request.url))
       }
     }
@@ -57,36 +69,47 @@ export async function middleware(
 
   if (checkIsPublicRoute(cleanPathName)) {
     const accessToken = request.cookies.get('chathub.access-token')?.value
-    const accessTokenResponse = await fetch(`http://localhost:3000/profile`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${accessToken}`
+    if (accessToken) {
+      try {
+        const accessTokenResponse = await fetch(`http://localhost:3000/profile`, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        })
+        if (accessTokenResponse.ok) return NextResponse.redirect(new URL('/', request.url))
+      } catch (error) {
+        console.log('MIDDLEWARE ERROR: [ACCESS TOKEN REQUEST]', error)
       }
-    })
-
-    if (accessTokenResponse.ok) return NextResponse.redirect(new URL('/', request.url))
+    }
 
     const refreshToken = request.cookies.get('chathub.refresh-token')?.value
-    const refreshTokenResponse = await fetch(`http://localhost:3000/auth/refresh-token`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${refreshToken}`
+    if (refreshToken) {
+      try {
+        const refreshTokenResponse = await fetch(`http://localhost:3000/auth/refresh-token`, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${refreshToken}`
+          }
+        })
+
+        if (refreshTokenResponse.ok) {
+          const data = await refreshTokenResponse.json() as RefreshTokenResponse
+
+          let response = NextResponse.redirect(new URL('/', request.url));
+          response.cookies.set({
+            name: "chathub.access-token",
+            value: data.accessToken
+          });
+          response.cookies.set({
+            name: "chathub.refresh-token",
+            value: data.refreshToken
+          });
+          return response
+        }
+      } catch (error) {
+        console.log('MIDDLEWARE ERROR: [REFRESH TOKEN REQUEST]', error)
       }
-    })
-
-    if (refreshTokenResponse.ok) {
-      const data = await refreshTokenResponse.json() as RefreshTokenResponse
-
-      let response = NextResponse.redirect(new URL('/', request.url));
-      response.cookies.set({
-        name: "chathub.access-token",
-        value: data.accessToken
-      });
-      response.cookies.set({
-        name: "chathub.refresh-token",
-        value: data.refreshToken
-      });
-      return response
     }
   }
 }
