@@ -20,11 +20,11 @@ export const inputStyle = tv({
 })
 
 export const helperTextStyle = tv({
-  base: 'text-sm text-blue-600 ml-2 mt-1',
+  base: 'text-sm text-primary ml-2 mt-1',
   variants: {
     color: {
       error: 'text-rose-500',
-      default: 'text-blue-600'
+      default: 'text-primary'
     }
   }
 })

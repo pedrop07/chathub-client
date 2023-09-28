@@ -13,7 +13,7 @@ export const buttonStyle = tv({
   ],
   variants: {
     color: {
-      primary: 'border-blue-600 bg-blue-600 enabled:hover:bg-blue-700 focus:ring-blue-300',
+      primary: 'border-primary bg-primary enabled:hover:bg-blue-700 focus:ring-blue-300',
       success: 'border border-emerald-500 bg-emerald-500 enabled:hover:bg-emerald-700 focus:ring-emerald-300',
       error: 'border border-rose-500 bg-rose-500 enabled:hover:bg-rose-700 focus:ring-rose-300',
     },
@@ -25,7 +25,7 @@ export const buttonStyle = tv({
     {
       color: "primary",
       variant: "outlined",
-      className: 'text-blue-600'
+      className: 'text-primary'
     },
     {
       color: "success",

@@ -45,7 +45,7 @@ export function Register() {
       <div className="w-11/12 sm:w-96">
         <Card>
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-            <h2 className="text-center text-2xl font-bold leading-9 tracking-tight text-blue-600 dark:text-slate-50">
+            <h2 className="text-center text-2xl font-bold leading-9 tracking-tight text-primary dark:text-slate-50">
               Criar conta
             </h2>
           </div>
@@ -141,7 +141,7 @@ export function Register() {
 
             <p className="mt-10 text-center text-sm text-gray-500 dark:text-slate-50">
               Já possuí uma conta?{' '}
-              <Link href='/sign-in' className="font-semibold leading-6 text-blue-600 hover:text-blue-500 dark:text-blue-500 dark:hover:text-blue-400 underline">
+              <Link href='/sign-in' className="font-semibold leading-6 text-primary hover:text-blue-500 dark:text-blue-500 dark:hover:text-blue-400 underline">
                 faça o login
               </Link>
             </p>

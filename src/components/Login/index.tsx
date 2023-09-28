@@ -50,7 +50,7 @@ export function Login() {
       <div className="w-11/12 sm:w-96">
         <Card>
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-            <h2 className="text-center text-2xl font-bold leading-9 tracking-tight text-blue-600 dark:text-white">
+            <h2 className="text-center text-2xl font-bold leading-9 tracking-tight text-primary dark:text-white">
               Fazer login
             </h2>
           </div>
@@ -113,7 +113,7 @@ export function Login() {
 
             <p className="mt-10 text-center text-sm text-gray-500 dark:text-slate-50">
               Não possuí uma conta?{' '}
-              <Link href='/sign-up' className="font-semibold leading-6 text-blue-600 hover:text-blue-500 dark:text-blue-500 dark:hover:text-blue-400 underline">
+              <Link href='/sign-up' className="font-semibold leading-6 text-primary hover:text-blue-500 dark:text-blue-500 dark:hover:text-blue-400 underline">
                 cadastre-se
               </Link>
             </p>

@@ -17,7 +17,7 @@ function HeaderDropdownLabel() {
   return (
     <>
       <UserCircle
-        className="text-blue-600 dark:text-slate-50"
+        className="text-primary dark:text-slate-50"
         size={30}
         weight="light"
       />
@@ -103,7 +103,7 @@ export function Header({ initialTheme }: Props) {
           }
           <button
             onClick={handleTheme}
-            className="flex items-center p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 text-blue-600 dark:text-slate-50"
+            className="flex items-center p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 text-primary dark:text-slate-50"
           >
             {theme === 'light' ? <Moon size={25} /> : <Sun size={25} />}
           </button>

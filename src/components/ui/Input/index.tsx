@@ -21,7 +21,7 @@ export function Input({
         {label && (
           <label
             htmlFor={props.id}
-            className="block mb-1 text-sm font-medium text-blue-600 dark:text-slate-50"
+            className="block mb-1 text-sm font-medium text-primary dark:text-slate-50"
           >
             {label}
           </label>

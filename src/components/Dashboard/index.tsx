@@ -22,6 +22,8 @@ export function Dashboard({ chats }: Props) {
     )
   }
 
+  console.log(chats)
+
   return (
     <div>
       <div className="p-4">
@@ -37,7 +39,7 @@ export function Dashboard({ chats }: Props) {
             chats?.map((chat) => {
               return (
                 <Link key={chat.id} href={`/chat/${chat.id}`}>
-                  <Chat title={chat.title} owner="community" description="ad" />
+                  <Chat title={chat.title} owner={chat.owner} description={chat.description} />
                 </Link>
               )
             })
