@@ -113,7 +113,7 @@ export function Login() {
 
             <p className="mt-10 text-center text-sm text-gray-500 dark:text-slate-50">
               Não possuí uma conta?{' '}
-              <Link href='/sign-up' className="font-semibold leading-6 text-primary hover:text-blue-500 dark:text-blue-500 dark:hover:text-blue-400 underline">
+              <Link href='/sign-up' className="whitespace-nowrap font-semibold leading-6 text-primary hover:text-blue-500 dark:text-blue-500 dark:hover:text-blue-400 underline">
                 cadastre-se
               </Link>
             </p>

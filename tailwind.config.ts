@@ -11,8 +11,12 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: '#1c64f2'
-      }
+        primary: '#1c64f2',
+        colorText: '#111827',
+        darkTheme: {
+          colorText: '#fff',
+        }
+      },
     },
   },
   darkMode: 'class',
