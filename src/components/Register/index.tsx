@@ -26,10 +26,10 @@ export function Register() {
     resolver: yupResolver(registerSchema)
   })
 
-  const onSubmit = async ({ name, email, password }: RegisterSchemaType) => {
+  const onSubmit = async ({ username, email, password }: RegisterSchemaType) => {
     try {
       await clientApi.post('/register', {
-        name,
+        username,
         email,
         password
       })
@@ -55,16 +55,16 @@ export function Register() {
               <div>
                 <div className="mt-2">
                   <Controller
-                    name="name"
+                    name="username"
                     control={control}
                     render={({ field }) => (
                       <>
                         <Input
                           id="name"
                           type="text"
-                          label='nome'
-                          error={!!errors.name}
-                          helperText={errors.name?.message}
+                          label='nome de usuário'
+                          error={!!errors.username}
+                          helperText={errors.username?.message}
                           {...field}
                         />
                       </>
