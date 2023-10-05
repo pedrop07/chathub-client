@@ -12,11 +12,6 @@ export const inputStyle = tv({
     'focus:ring-blue-500',
     'dark:placeholder-gray-400',
   ],
-  variants: {
-    variant: {
-      outlined: 'bg-gray-50',
-    }
-  }
 })
 
 export const helperTextStyle = tv({

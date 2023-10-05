@@ -1,18 +1,18 @@
 import { InputHTMLAttributes } from 'react'
 import { helperTextStyle, inputStyle } from './styles'
+import clsx from 'clsx'
 
 interface InputProps {
   error?: boolean
   helperText?: string
   label?: string
-  variant?: 'outlined'
 }
 
 export function Input({
   error,
   helperText,
   label,
-  variant = 'outlined',
+  className,
   ...props
 }: InputHTMLAttributes<HTMLInputElement> & InputProps) {
   return (
@@ -27,7 +27,7 @@ export function Input({
           </label>
         )}
         <input
-          className={inputStyle({ variant, className: props.className })}
+          className={clsx(className, inputStyle())}
           {...props}
         />
       </div>
