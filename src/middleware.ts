@@ -22,13 +22,13 @@ export async function middleware(
     const accessToken = request.cookies.get('chathub.access-token')?.value
     if (accessToken) {
       try {
-        await fetch(`http://localhost:3000/profile`, {
+        const profileResponse = await fetch(`http://localhost:3000/profile`, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${accessToken}`
           }
         })
-        return NextResponse.next()
+        if (profileResponse.ok) return NextResponse.next()
       } catch (error) {
         console.log('MIDDLEWARE ERROR: [ACCESS TOKEN REQUEST]', error)
       }
@@ -52,6 +52,7 @@ export async function middleware(
             name: "chathub.access-token",
             value: data.accessToken
           });
+
           response.cookies.set({
             name: "chathub.refresh-token",
             value: data.refreshToken
@@ -64,6 +65,8 @@ export async function middleware(
         console.log('MIDDLEWARE ERROR: [REFRESH TOKEN REQUEST]', error)
         return NextResponse.redirect(new URL('/sign-in', request.url))
       }
+    } else {
+      return NextResponse.redirect(new URL('/sign-in', request.url))
     }
   }
 
@@ -71,13 +74,13 @@ export async function middleware(
     const accessToken = request.cookies.get('chathub.access-token')?.value
     if (accessToken) {
       try {
-        const accessTokenResponse = await fetch(`http://localhost:3000/profile`, {
+        const profileResponse = await fetch(`http://localhost:3000/profile`, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${accessToken}`
           }
         })
-        if (accessTokenResponse.ok) return NextResponse.redirect(new URL('/', request.url))
+        if (profileResponse.ok) return NextResponse.redirect(new URL('/', request.url))
       } catch (error) {
         console.log('MIDDLEWARE ERROR: [ACCESS TOKEN REQUEST]', error)
       }
@@ -110,6 +113,51 @@ export async function middleware(
       } catch (error) {
         console.log('MIDDLEWARE ERROR: [REFRESH TOKEN REQUEST]', error)
       }
+    }
+  }
+
+  const accessToken = request.cookies.get('chathub.access-token')?.value
+  if (accessToken) {
+    try {
+      const profileResponse = await fetch(`http://localhost:3000/profile`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      })
+      if (profileResponse.ok) return NextResponse.next()
+    } catch (error) {
+      console.log('MIDDLEWARE ERROR: [ACCESS TOKEN REQUEST]', error)
+    }
+  }
+
+  const refreshToken = request.cookies.get('chathub.refresh-token')?.value
+  if (refreshToken) {
+    try {
+      const refreshTokenResponse = await fetch(`http://localhost:3000/auth/refresh-token`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${refreshToken}`
+        }
+      })
+
+      if (refreshTokenResponse.ok) {
+        const data = await refreshTokenResponse.json() as RefreshTokenResponse
+
+        let response = NextResponse.redirect(request.url);
+        response.cookies.set({
+          name: "chathub.access-token",
+          value: data.accessToken
+        });
+
+        response.cookies.set({
+          name: "chathub.refresh-token",
+          value: data.refreshToken
+        });
+        return response
+      }
+    } catch (error) {
+      console.log('MIDDLEWARE ERROR: [REFRESH TOKEN REQUEST]', error)
     }
   }
 }
