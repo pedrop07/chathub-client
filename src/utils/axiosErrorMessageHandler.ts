@@ -1,6 +1,6 @@
 import { AxiosError } from "axios"
 
-export function errorMessageHandler(error: any){
+export function axiosErrorMessageHandler(error: any){
   if (error instanceof AxiosError && error.response?.data?.message) {
     const errorMessage = error.response?.data?.message
     if(errorMessage instanceof Array) {

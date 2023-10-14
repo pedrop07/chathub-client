@@ -11,11 +11,11 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: '#1c64f2',
-        colorText: '#111827',
-        darkTheme: {
-          colorText: '#fff',
-        }
+        background: 'var(--background)',
+        foreground: 'var(--foreground)',
+        muted: 'var(--muted)',
+        primary: 'var(--primary)',
+        secondary: 'var(--secondary)',
       },
     },
   },

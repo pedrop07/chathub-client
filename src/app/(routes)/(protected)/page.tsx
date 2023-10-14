@@ -1,13 +1,20 @@
 import { Dashboard } from "@/components/Dashboard"
-import { Chat } from "@/interfaces/Chat"
-import { FetchAuth } from "@/utils/fetchAuth"
+import { Chat } from "@/types/Chat"
+import { api } from "@/services/api"
+import { cookies } from "next/headers"
 
 export default async function Page() {
-  const chats = await FetchAuth<Chat[]>('chats', 'GET')
+  const accessToken = cookies().get('chathub.access-token')?.value
+
+  const { data: chats } = await api.get<Chat[]>('/chats', {
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    }
+  })
 
   return (
     <>
-      <Dashboard chats={chats} />
+      <Dashboard chats={chats ?? []} />
     </>
   )
 }

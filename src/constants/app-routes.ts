@@ -5,6 +5,6 @@ export const APP_ROUTES = {
   },
   private: {
     home: '/',
-    chat: '/chat'
+    chat: '/chat',
   }
 }

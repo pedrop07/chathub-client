@@ -1,16 +1,18 @@
 'use client'
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { setCookie } from "nookies"
-import { Chats, Gear, House, Moon, PlusCircle, SignOut, Sun, UserCircle } from '@phosphor-icons/react'
-import { useUserStore } from "@/store/UserStore"
-import { logout } from "@/app/actions"
-import { Theme } from "@/interfaces/Theme"
+import { House, Moon, Sun, User as UserIcon, UserCircle } from '@phosphor-icons/react'
+import { signOut } from "@/app/actions"
+import { Theme } from "@/types/Theme"
 import { Dropdown, Modal } from "flowbite-react";
 import { Button } from "../ui/Button"
+import { User } from "@/types/User"
+import { useUserStore } from "@/store/UserStore"
 
 interface Props {
   initialTheme: Theme;
+  user: User | null;
 }
 
 function HeaderDropdownLabel() {
@@ -25,10 +27,13 @@ function HeaderDropdownLabel() {
   )
 }
 
-export function Header({ initialTheme }: Props) {
+export function Header({ initialTheme, user }: Props) {
+  const setLoggedUser = useUserStore(store => store.setLoggedUser)
+  const loggedUser = useUserStore(store => store.loggedUser)
   const [theme, setTheme] = useState(initialTheme)
-  const [openModal, setOpenModal] = useState<string | undefined>();
-  const { user } = useUserStore()
+  const [openSignOutModal, setOpenSignOutModal] = useState<string | undefined>();
+
+  console.log(loggedUser)
 
   const handleTheme = async () => {
     const newTheme = theme === 'light' ? 'dark' : 'light'
@@ -48,22 +53,28 @@ export function Header({ initialTheme }: Props) {
     }
   }
 
-  const handleOpenLogoutModal = () => {
-    setOpenModal('dismissible')
+  const handleOpenSignOutModal = () => {
+    setOpenSignOutModal('dismissible')
   }
 
-  const handleCloseLogoutModal = () => {
-    setOpenModal(undefined)
+  const handleCloseSignOutModal = () => {
+    setOpenSignOutModal(undefined)
   }
 
-  const handleLogout = () => {
-    logout()
+  const handleSignOut = () => {
+    signOut()
   }
+
+  useEffect(() => {
+    if (user) {
+      setLoggedUser(user)
+    }
+  }, [])
 
   return (
     <>
-      <nav className="bg-white dark:bg-slate-800 border-gray-200">
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-end gap-4 mx-auto p-2">
+      <header className="border-b border-gray-200 dark:border-gray-700 mb-4">
+        <div className="max-w-7xl h-[60px] flex flex-wrap items-center justify-end gap-4 mx-auto px-4">
           {
             user && (
               <>
@@ -74,27 +85,20 @@ export function Header({ initialTheme }: Props) {
                 >
                   <Dropdown.Header>
                     <span className="block text-sm">
-                      {user.name}
+                      {user.username}
                     </span>
                     <span className="block truncate text-sm font-medium">
                       {user.email}
                     </span>
                   </Dropdown.Header>
-                  <Dropdown.Item href="/" className="gap-1">
-                    <House size={20} />Ínicio
+                  <Dropdown.Item href="/" className="gap-2">
+                    <House size={20} /> Início
                   </Dropdown.Item>
-                  <Dropdown.Item className="gap-1">
-                    <Chats size={20} /> Chats que você participa
-                  </Dropdown.Item>
-                  <Dropdown.Item className="gap-1">
-                    <PlusCircle size={20} /> Criar novo chat
+                  <Dropdown.Item href={`/${user.username}`} className="gap-2">
+                    <UserIcon size={20} /> Perfil
                   </Dropdown.Item>
                   <Dropdown.Divider />
-                  <Dropdown.Item className="gap-1">
-                    <Gear size={20} /> Configurações
-                  </Dropdown.Item>
-                  <Dropdown.Divider />
-                  <Dropdown.Item onClick={handleOpenLogoutModal}>
+                  <Dropdown.Item onClick={handleOpenSignOutModal}>
                     Sair
                   </Dropdown.Item>
                 </Dropdown>
@@ -108,16 +112,18 @@ export function Header({ initialTheme }: Props) {
             {theme === 'light' ? <Moon size={25} /> : <Sun size={25} />}
           </button>
         </div>
-      </nav>
+      </header>
 
-      <Modal dismissible show={openModal === 'dismissible'} onClose={handleCloseLogoutModal}>
+      <Modal dismissible show={openSignOutModal === 'dismissible'} onClose={handleCloseSignOutModal}>
         <Modal.Header>Tem certeza de que deseja sair?</Modal.Header>
-        <Modal.Footer>
-          <Button onClick={handleCloseLogoutModal}>Fechar</Button>
-          <Button color="error" variant="outlined" onClick={handleLogout}>
+        <Modal.Body>
+          <Button className="mr-3" onClick={handleCloseSignOutModal}>
+            Fechar
+          </Button>
+          <Button color="error" variant="outlined" onClick={handleSignOut}>
             Sair
           </Button>
-        </Modal.Footer>
+        </Modal.Body>
       </Modal>
     </>
   )

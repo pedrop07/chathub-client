@@ -1,50 +1,36 @@
-'use client'
-
-import { useState } from "react"
-import { Chat } from "../Chat"
 import Link from "next/link"
-import { Chat as ChatInterface } from "@/interfaces/Chat"
+import { Chat as ChatInterface } from "@/types/Chat"
+import { ChatCard } from "../ChatCard";
 
 interface Props {
   chats: ChatInterface[];
 }
 
 export function Dashboard({ chats }: Props) {
-  const [isLoading, setIsLoading] = useState(false)
 
-  if (isLoading) {
-    return (
-      <>
-        <div className="p-4 animate-pulse">
-          <div className="bg-slate-600 h-48 rounded mb-4" />
-        </div>
-      </>
-    )
-  }
-
-  console.log(chats)
 
   return (
     <div>
-      <div className="p-4">
-        
-        <div className="bg-[url('/space.jpg')] bg-cover bg-center rounded">
-          <div className="flex items-center justify-center backdrop-blur-sm h-48 mb-4 ">
-            <h1 className="text-2xl text-white">Encontre a sua comunidade no ChatHub</h1>
-          </div>
+      <div className="bg-[url('/space.jpg')] bg-cover bg-center rounded">
+        <div className="flex items-center justify-center backdrop-blur-sm h-48 mb-4 ">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-center text-white">
+            ChatHub
+            <br />
+            <span className="bg-gradient-to-r from-primary to-sky-400 bg-clip-text text-transparent">
+              Explore & conecte
+            </span>
+          </h1>
         </div>
+      </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          {
-            chats?.map((chat) => {
-              return (
-                <Link key={chat.id} href={`/chat/${chat.id}`}>
-                  <Chat title={chat.title} owner={chat.owner} description={chat.description} />
-                </Link>
-              )
-            })
-          }
-        </div>
+      <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
+        {
+          chats?.map((chat) => {
+            return (
+              <ChatCard key={chat.id} data={chat} />
+            )
+          })
+        }
       </div>
     </div>
   )

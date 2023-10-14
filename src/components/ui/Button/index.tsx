@@ -6,7 +6,7 @@ import { Spinner } from "../Spinner";
 interface Props {
   children: ReactNode;
   variant?: 'outlined';
-  color?: 'primary' | 'success' | 'error'; 
+  color?: 'primary' | 'success' | 'error' | 'muted'; 
   fullWidth?: boolean;
   loading?: boolean;
 }

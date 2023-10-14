@@ -9,10 +9,10 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { InferType } from 'yup'
 import { registerSchema } from './schema'
 import { Card } from '../ui/Card'
-import { clientApi } from '@/services/clientApi'
+import { api } from '@/services/api'
 import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
-import { errorMessageHandler } from '@/utils/errorMessageHandler'
+import { axiosErrorMessageHandler } from '@/utils/axiosErrorMessageHandler'
 
 type RegisterSchemaType = InferType<typeof registerSchema>;
 
@@ -28,7 +28,7 @@ export function Register() {
 
   const onSubmit = async ({ username, email, password }: RegisterSchemaType) => {
     try {
-      await clientApi.post('/register', {
+      await api.post('/register', {
         username,
         email,
         password
@@ -36,7 +36,7 @@ export function Register() {
 
       push('/sign-in')
     } catch (error) {
-      toast.error(errorMessageHandler(error))
+      toast.error(axiosErrorMessageHandler(error))
     }
   }
 
@@ -134,7 +134,7 @@ export function Register() {
 
               <div>
                 <Button fullWidth type='submit'>
-                  Entrar
+                  Criar conta
                 </Button>
               </div>
             </form>

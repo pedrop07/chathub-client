@@ -1,7 +1,9 @@
-'use client' 
- 
+'use client'
+
+import { Button } from '@/components/ui/Button'
+import Image from 'next/image'
 import { useEffect } from 'react'
- 
+
 export default function Error({
   error,
   reset,
@@ -14,16 +16,18 @@ export default function Error({
   }, [error])
 
   return (
-    <div>
-      <h2>Something went wrong!</h2>
-      <button
-        onClick={
-          // Attempt to recover by trying to re-render the segment
-          () => reset()
-        }
-      >
-        Try again
-      </button>
+    <div className='h-[calc(100%-61px)] flex items-center justify-center gap-4 flex-wrap'>
+      <div className='text-foreground'>
+        <h2 className='text-2xl mb-2'><strong>Algo deu errado!</strong></h2>
+        <Button
+          onClick={
+            () => reset()
+          }
+        >
+          Tentar novamente
+        </Button>
+      </div>
+      <Image priority alt='Space' src={'/space-error.svg'} width={350} height={350} />
     </div>
   )
 }

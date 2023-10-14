@@ -6,3 +6,19 @@ body,
 html {
   height: 100%;
 }
+
+:root {
+  --background: #fff;
+  --foreground: #111827;
+  --muted: #7f8c9d;
+  --primary: #1c64f2;
+  --secondary: #2d83a8;
+}
+
+.dark {
+  --background: #020817;
+  --foreground: #fff;
+  --muted: #9ca3af;
+  --primary: #1c64f2;
+  --secondary: #38bdf8;
+}

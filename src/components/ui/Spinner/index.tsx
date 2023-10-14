@@ -1,6 +1,13 @@
-export function Spinner() {
+import clsx from "clsx";
+import { HTMLProps } from "react";
+
+interface Props {
+  className?: HTMLProps<HTMLElement>["className"];
+}
+
+export function Spinner({ className }: Props) {
   return (
-    <div role="status" className="flex justify-center">
+    <div role="status" className={clsx("flex justify-center", className)}>
       <svg
         aria-hidden="true"
         className="w-5 h-5 text-white animate-spin fill-primary"

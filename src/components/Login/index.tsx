@@ -4,7 +4,7 @@ import React from 'react'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import Link from 'next/link'
-import { clientApi } from '@/services/clientApi'
+import { api } from '@/services/api'
 import { useRouter } from 'next/navigation'
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -12,7 +12,7 @@ import { loginSchema } from './schema'
 import { InferType } from 'yup'
 import { toast } from 'react-hot-toast'
 import { Card } from '../ui/Card'
-import { errorMessageHandler } from '@/utils/errorMessageHandler'
+import { axiosErrorMessageHandler } from '@/utils/axiosErrorMessageHandler'
 import { setAccessTokenCookie, setRefreshTokenCookie } from '@/app/actions'
 
 type LoginSchemaType = InferType<typeof loginSchema>;
@@ -29,7 +29,7 @@ export function Login() {
 
   const onSubmit = async ({ email, password }: LoginSchemaType) => {
     try {
-      const { data } = await clientApi.post('/auth/login', {
+      const { data } = await api.post('/auth/login', {
         email,
         password
       })
@@ -41,7 +41,7 @@ export function Login() {
 
       push('/')
     } catch (error) {
-      toast.error(errorMessageHandler(error))
+      toast.error(axiosErrorMessageHandler(error))
     }
   }
 
